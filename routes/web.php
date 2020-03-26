@@ -14,11 +14,13 @@
 
 Route::get('/index','index\IndexController@index');
 Route::get('/','index\IndexController@index');
-Route::post('/index/login','index\IndexController@login');
 Route::get('/auth','index\IndexController@auth');
 Route::get('/aouth','index\IndexController@aouth');
 Route::get('/forlogin','index\IndexController@forlogin');
 
 
-
+//登录
+Route::get('/login/wechat','index\LoginController@wechat');
+Route::get('/login/tel','index\LoginController@tel');
+Route::get('/login/user','index\LoginController@user');
 
