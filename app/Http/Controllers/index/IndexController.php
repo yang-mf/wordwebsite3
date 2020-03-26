@@ -66,6 +66,7 @@ class IndexController extends Controller
         $obj = new QRcode();
 
         $data = $obj::png($url,'../public/1.png');
+        return $this->view('index.forlogin',['data'=>$data]);
 
 //        $obj->png($url,'./1.png');
 
