@@ -60,7 +60,7 @@ class IndexController extends Controller
         //区分是谁  登录的  生成一个用户标识  来区分是谁登录的
         $uid = uniqid();
 //        echo $uid;die;
-        $url = "http://wordwebsite.11905.com/aouth?uid=".$uid;
+        $url = "http://wordwebsite3.13366737021.top/aouth?uid=".$uid;
 
 
         $obj = new QRcode();
@@ -76,7 +76,7 @@ class IndexController extends Controller
     {
         $uid = $_GET['uid'];
         $id = "wx9458fefe0c30d65b";
-        $uri = urlencode("http://wordwebsite.11905.com/forlogin");
+        $uri = urlencode("http://wordwebsite3.13366737021.top/forlogin");
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$id&redirect_uri=$uri&response_type=code&scope=SCOPE&state=$uid#wechat_redirect";
         echo $url;die;
 //        header("location:$url");
