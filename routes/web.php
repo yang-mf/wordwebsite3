@@ -11,11 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::get('/index','index\IndexController@index');
+Route::get('/','index\IndexController@index');
 Route::post('/index/login','index\IndexController@login');
+Route::get('/auth','index\IndexController@auth');
+Route::get('/aouth','index\IndexController@aouth');
+Route::get('/forlogin','index\IndexController@forlogin');
+
 
 
 
