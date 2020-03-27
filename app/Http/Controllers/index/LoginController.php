@@ -15,6 +15,7 @@ class LoginController extends Controller
     //用户手机号登录
     public function tel()
     {
+
         return view('login/tel');
     }
 
@@ -22,6 +23,7 @@ class LoginController extends Controller
     {
         $tel = $_POST['tel'];
         $code = $_POST['code'];
+        $pwd = $_POST['pwd'];
     }
 
     //用户登录
@@ -37,8 +39,8 @@ class LoginController extends Controller
         if(empty($name)){
             echo "请输入用户名";die;
         }else{
-            $where[] = [
-                'name' =>$name
+            $where = [
+                'user_name' =>$name
             ];
             $res1 = User::where($where)->first();
             if(empty($res1)){
@@ -54,14 +56,10 @@ class LoginController extends Controller
         }else{
             if($pwd != $password){
                 echo "密码有误";die;
-            }
-        }
-        $tel = $_POST['tel'];
-        if(empty($tel)){
-            echo "请输入电话";die;
-        }else{
-            if($tel != $user_tel){
-                echo "电话不符合，请确认您的手机号";die;
+            }else{
+
+                return view('/index')->with('name', $name);
+                die;
             }
         }
     }

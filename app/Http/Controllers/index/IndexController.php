@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\index;
 
-include "../app/Tools/phpqrcode.php";
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -58,44 +58,7 @@ class IndexController extends Controller
         $tel = $_POST['tel'];
         if(empty($tel)){
             echo "请输入电话";die;
-        }else{
-            if($tel != $user_tel){
-                echo "电话不符合，请确认您的手机号";die;
-            }
         }
     }
 
-    public function auth()
-    {
-
-        //下载phpqrcode类
-        //引入phpqrcode类
-        //区分是谁  登录的  生成一个用户标识  来区分是谁登录的
-        $uid = uniqid();
-//        echo $uid;die;
-        $url = "http://wordwebsite.11905.com/aouth?uid=".$uid;
-
-        $obj = new QRcode();
-
-        $data = $obj::png($url,'../public/1.png');
-        return view('index/forlogin');
-
-//        $obj->png($url,'./1.png');
-
-    }
-
-    public function aouth()
-    {
-        $uid = $_GET['uid'];
-        $id = "wx9458fefe0c30d65b";
-        $uri = urlencode("http://wordwebsite.11905.com/forlogin");
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$id&redirect_uri=$uri&response_type=code&scope=SCOPE&state=$uid#wechat_redirect";
-        echo $url;die;
-//        header("location:$url");
-    }
-
-    public function forlogin()
-    {
-        echo $_GET['echostr'];
-    }
 }

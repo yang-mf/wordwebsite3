@@ -37,9 +37,14 @@
 <link rel="stylesheet" type="text/css" href="static/css/index.css" />
 
 <!-- 顶部导航 --><div id="topNav" class="topNav"></div><!-- 顶部导航的模板 -->
-<a href="/login/wechat">微信扫码登录</a>
-<a href="/login/tel">手机号码登录</a>
-<a href="/login/user">账号密码登录</a>
+<?php if(empty($name)){ ?>
+    <a href="/login/wechat">微信扫码登录</a>
+    <a href="/login/tel">手机号码登录</a>
+    <a href="/login/user">账号密码登录</a>
+<?php }else{ ?>
+    echo '欢迎用户'.$data.'您的到来';
+<?php } ?>
+
 <textarea id="topNavBarTpl" style="display:none;"><div class="pageCenter">
         <!--顶部左边区块--><div id="topLeft" class="topLeft cf"><ul><li class="navNormal authority">
                     <span>
@@ -62,7 +67,30 @@
         //顶部导航条
         CS.topNav.init(getUserInfoAjaxUrl, getUserNewMsgUrl);
     });
-</script><div class="pageCenter"><div class="bookheader cf"><div class="logo fl"><a href="http://book.qq.com"><img alt="腾讯文学，文字之美，感动心灵！" src="static/picture/txwxlogo.jpg"></a></div><div class="titleSearch fl cf"><div class="searchClass" id="searchClass"><em type="all" id="currentSiteBtn">全部</em><div id="searchSiteList" class="searchClass_SubBox" style="display:none;"><a href="javascript:" type="all">全部</a><a href="javascript:" type="chuangshi">创世</a><a href="javascript:" type="yunqi">云起</a><a href="javascript:" type="dushu">图书</a></div></div><span></span><input id="searchInputBySite" type="text" class="clearInput" style="color: rgb(153, 153, 153);"  def="大国重工" value="大国重工"/><input id="searchBySiteBtn" type="button" class="searchBtn"><div class="hotWords">热词： <a href="http://yunqi.qq.com/bk/gdyq/26835006.html" target="_blank">只想继承你的家产</a><a href="http://yunqi.qq.com/bk/gdyq/26550647.html" target="_blank">画春光</a><a href="http://yunqi.qq.com/bk/gdyq/24230535.html" target="_blank">农家小福女</a><a href="http://chuangshi.qq.com/bk/ds/13665778.html" target="_blank">三界红包群</a><a href="http://chuangshi.qq.com/bk/xx/20468795.html" target="_blank">飞剑问道</a><a href="http://chuangshi.qq.com/bk/xh/614782.html" target="_blank">全职法师</a></div></div><div id="headQrCode" class="headQrCode fr"><p>下载QQ阅读</p><img width="80" height="80" src="static/picture/code03.png"><a href="javascript:" class="close"></a></div></div><script type="text/javascript" src="static/js/subnav.js"></script><script type="text/javascript">    var searchResultUrl = "/search/index/type/p1/wd/p2.html";
+</script>
+<div class="pageCenter">
+    <div class="bookheader cf">
+        <div class="logo fl">
+            <a href="http://book.qq.com">
+                <img alt="腾讯文学，文字之美，感动心灵！" src="static/picture/txwxlogo.jpg">
+            </a>
+        </div>
+        <div class="titleSearch fl cf">
+            <div class="searchClass" id="searchClass">
+                <em type="all" id="currentSiteBtn">全部</em>
+                <div id="searchSiteList" class="searchClass_SubBox" style="display:none;">
+                    <a href="javascript:" type="all">全部</a>
+                    <a href="javascript:" type="chuangshi">创世</a>
+                    <a href="javascript:" type="yunqi">云起</a>
+                    <a href="javascript:" type="dushu">图书</a>
+                </div>
+            </div>
+            <span></span>
+            <form action="/find/word" method="post">
+            <input id="searchInputBySite" type="text" class="clearInput" style="color: rgb(153, 153, 153);"  def="大国重工" placeholder="大国重工" name="word" />
+            <input id="searchBySiteBtn" type="submit" class="searchBtn" value="">
+            </form>
+            <div class="hotWords">热词： <a href="http://yunqi.qq.com/bk/gdyq/26835006.html" target="_blank">只想继承你的家产</a><a href="http://yunqi.qq.com/bk/gdyq/26550647.html" target="_blank">画春光</a><a href="http://yunqi.qq.com/bk/gdyq/24230535.html" target="_blank">农家小福女</a><a href="http://chuangshi.qq.com/bk/ds/13665778.html" target="_blank">三界红包群</a><a href="http://chuangshi.qq.com/bk/xx/20468795.html" target="_blank">飞剑问道</a><a href="http://chuangshi.qq.com/bk/xh/614782.html" target="_blank">全职法师</a></div></div><div id="headQrCode" class="headQrCode fr"><p>下载QQ阅读</p><img width="80" height="80" src="static/picture/code03.png"><a href="javascript:" class="close"></a></div></div><script type="text/javascript" src="static/js/subnav.js"></script><script type="text/javascript">    var searchResultUrl = "/search/index/type/p1/wd/p2.html";
 
         $(function () {
             CS.page.subNav.init(searchResultUrl);
@@ -214,7 +242,7 @@
         </div>
         <div class="rightBox fr">
             <div class="threeTabBox tabSwitch">
-                <p>创世排行榜</p>
+                <p>人气排行榜</p>
                 <div class="choiceBox">
                     <span class="tabCur">人气榜<cite></cite></span><span>月票榜</span></div></div>
             <!--男频榜--><div class="rankListWrap">
@@ -227,9 +255,9 @@
                             <a target="_blank" href="http://chuangshi.qq.com/bk/wx/23240412.html">
                                 <img src="static/picture/s_23240412.jpg" width="55" height="74"  alt="鸿渐于磐"/>
                             </a>
-                            <div class="detailInfo"><h4><a target="_blank" href="http://chuangshi.qq.com/bk/wx/23240412.html">鸿渐于磐
-                                    </a>
-                                </h4><p>作者：
+                            <div class="detailInfo"><h4><a target="_blank" href="http://chuangshi.qq.com/bk/wx/23240412.html">鸿渐于磐</a>
+                                </h4>
+                                <p>作者：
                                     <a target="_blank" href="http://account.book.qq.com/bk/author/AD1QOgdqWWhcNwtvV2FTZAA6WzNQPgNi">徐鸣辰</a>
                                 </p>
                                 <p>分类：

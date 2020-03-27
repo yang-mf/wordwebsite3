@@ -1,21 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+<p> 请输入手机号和密码或使用验证码登录</p>
+
 <form action="index/login" method="post">
     手机号：<input type="text" name="tel"><br>
-    验证码：<input type="password" name="code"><input type="button" value="点击获取验证码" id = "btn"><br>
+    验证码：<input type="password" name="code"><input type="button" value="点击获取验证码" id="btn"><br>
+    密  码：<input type="password" name ="pwd"><br>
     <input type="submit" value="登录">
+
 </form>
 <a href="/login/wechat">微信扫码登录</a>
 <a href="/login/user">账号密码登录</a>
-</body>
+
+<script src="/jquery.js"></script>
 
 <script>
     $('#btn').on('click',function(){
@@ -23,17 +18,18 @@
         if(tel == ''){
             alert('手机号不能为空');
         }
+
         $.ajax({
-            url:"{{url('read/aliyun_code')}}",
+            url:"code",
             type:'post',
             data:{tel:tel},
             dataType:'json',
             success:function(res){
-                if(res.Message == ok){
-                    alert('发送成功');
-                }
+                console.log((res));
+                // if(res.Message == ok){
+                //     alert('发送成功');
+                // }
             }
         });
     });
 </script>
-</html>
