@@ -32,4 +32,8 @@ Route::post('/login/userdologin','index\LoginController@userdologin');
 
 Route::get('/session','index\IndexController@session');
 
+//详情页
+Route::get('/detail','detail\DetailController@detail');
+
+
 

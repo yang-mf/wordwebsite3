@@ -45,19 +45,38 @@
     欢迎用户 <?php echo $name ?> 您的到来;
 <?php } ?>
 <br>
+<div>
+    <div style="float: left; border: white 1px solid;">
 
-<sapn>
+        <sapn>
 
-    热搜：<br>
+            热搜：<br>
 
-    <?php foreach ($sou as $k => $v){ ?>
-        <a href=""><?php echo $v['shuming']; ?></a>
-         &nbsp
-        <?php
-        echo $v['dianji'] ;
-        echo '<br>';
-    } ?>
-</sapn>
+            <?php foreach ($sou as $k => $v){ ?>
+                <a href="/detail?shuming=<?php echo $v['shuming'] ?>"><?php echo $v['shuming']; ?></a>
+                 &nbsp
+                <?php
+                echo $v['dianji'] ;
+                echo '<br>';
+            } ?>
+        </sapn>
+    </div>
+    <div style="float: left; border: white 1px solid; padding-left: 30px">
+        <sapn>
+
+            月票：<br>
+
+            <?php foreach ($yue as $k => $v){ ?>
+                <a href="/detail?shuming=<?php echo $v['shuming'] ?>"><?php echo $v['shuming']; ?></a>
+                &nbsp
+                <?php
+                echo $v['yuepiao'] ;
+                echo '<br>';
+            } ?>
+        </sapn>
+    </div>
+</div>
+
 
 
 <textarea id="topNavBarTpl" style="display:none;"><div class="pageCenter">
