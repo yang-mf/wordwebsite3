@@ -114,6 +114,6 @@ class LoginController extends Controller
 
     public function forlogin()
     {
-        echo $_GET['echostr'];
+        echo $_GET['code'];
     }
 }
