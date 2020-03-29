@@ -11,5 +11,8 @@
 <img src="../1.png" alt=""><br>
 <a href="/login/tel">手机号码登录</a>
 <a href="/login/user">账号密码登录</a>
+<p>如果还未关注请先关注</p><br>
+<img src="../2.jpg" alt="">
+
 </body>
 </html>

@@ -1,6 +1,6 @@
 <p> 请输入手机号和密码或使用验证码登录</p>
 
-<form action="index/login" method="post">
+<form action="teldologin" method="post">
     手机号：<input type="text" name="tel"><br>
     验证码：<input type="password" name="code"><input type="button" value="点击获取验证码" id="btn"><br>
     密  码：<input type="password" name ="pwd"><br>
@@ -20,15 +20,15 @@
         }
 
         $.ajax({
-            url:"code",
+            url:"sendsms",
             type:'post',
             data:{tel:tel},
             dataType:'json',
             success:function(res){
-                console.log((res));
-                // if(res.Message == ok){
-                //     alert('发送成功');
-                // }
+                // alert(res);
+                if(res == 1){
+                    alert('发送成功');
+                }
             }
         });
     });

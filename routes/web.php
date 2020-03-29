@@ -18,13 +18,17 @@ Route::get('/aouth','index\IndexController@aouth');
 Route::get('/forlogin','index\IndexController@forlogin');
 
 //发送短信验证码
-Route::post('/login/code','aliyun@code');
+Route::post('/login/sendsms','aliyun@sendsms');
 
 Route::post('/find/word','FindController@word');
 
 //登录页面显示
 Route::get('/login/wechat','index\LoginController@wechat');
 Route::get('/login/tel','index\LoginController@tel');
+Route::post('/login/teldologin','index\LoginController@teldologin');
 Route::get('/login/user','index\LoginController@user');
 Route::post('/login/userdologin','index\LoginController@userdologin');
+
+Route::get('/session','index\IndexController@session');
+
 

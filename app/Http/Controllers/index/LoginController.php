@@ -5,6 +5,7 @@ namespace App\Http\Controllers\index;
 include "../app/Tools/phpqrcode.php";
 
 use App\Http\Controllers\Controller;
+use App\model\Book;
 use Illuminate\Http\Request;
 use App\model\User;
 use QRcode;
@@ -12,7 +13,7 @@ use QRcode;
 class LoginController extends Controller
 {
 
-    //用户手机号登录
+    //用户手机号登录显示页面
     public function tel()
     {
 
@@ -22,12 +23,40 @@ class LoginController extends Controller
     public function teldologin()
     {
         $tel = $_POST['tel'];
+        if(empty($tel)){
+            echo "请输入您的手机号";
+        }
         $code = $_POST['code'];
+
+        $session_code = session('code');
+//        echo $session_code;die;
+        if($code != $session_code){
+            echo "请输入正确的验证码";
+        }
+
         $pwd = $_POST['pwd'];
+
+        $userdata[] =[
+            'user_tel'=>$tel,
+            'user_pwd'=>$pwd
+        ];
+        $res = User::insert($userdata);
+        if($res){
+            session(['name'=>$tel]);
+
+            $data = Book::orderBy('dianji','desc')->get();
+            for($i=0;$i<5;$i++){
+                $sou[$i]['shuming'] = $data[$i]['shuming'];
+                $sou[$i]['dianji'] = $data[$i]['dianji'];
+            }
+
+            $name = session('name');
+
+            return view('index/index',['sou'=>$sou,'name'=>$name]);
+        }
     }
 
-    //用户登录
-
+    //用户登录显示页面
     public function user()
     {
         return view('login/user');
@@ -57,30 +86,19 @@ class LoginController extends Controller
             if($pwd != $password){
                 echo "密码有误";die;
             }else{
-
-                return view('/index')->with('name', $name);
+                return view('/index',['name'=>$name]);
                 die;
             }
         }
     }
-
+    //微信登陆显示页面
     public function wechat()
     {
-
-        //下载phpqrcode类
-        //引入phpqrcode类
-        //区分是谁  登录的  生成一个用户标识  来区分是谁登录的
         $uid = uniqid();
-//        echo $uid;die;
         $url = "http://wordwebsite.11905.com/aouth?uid=".$uid;
-
         $obj = new QRcode();
-
         $data = $obj::png($url,'../public/1.png');
         return view('login/wechat');
-
-//        $obj->png($url,'./1.png');
-
     }
 
     public function aouth()
