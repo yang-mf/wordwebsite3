@@ -108,7 +108,7 @@ class LoginController extends Controller
         $id = "wx9458fefe0c30d65b";
         $uri = urlencode("http://wordwebsite3.13366737021.top/forlogin");
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$id&redirect_uri=$uri&response_type=code&scope=SCOPE&state=$uid#wechat_redirect";
-//        echo $url;die;
+        echo $url;die;
         header("location:$url");
     }
 
