@@ -45,8 +45,17 @@
     欢迎用户 <?php echo $name ?> 您的到来;
 <?php } ?>
 <br>
-<a href="/zuozhe/zhuce">作者注册</a>
-<a href="/zuozhe/denglu">作者登录</a>
+<div>
+    作者模板：
+    <a href="/zuozhe/zhuce">作者注册</a>||
+    <a href="/zuozhe/denglu">作者登录</a>
+</div>
+<!--<div>-->
+<!--    分类：-->
+<!--    --><?php //foreach ($fenleiname as $k=>$v) { ?>
+<!--        <a href="/zuozhe/zhuce">作者注册</a>||-->
+<!--    --><?php //} ?>
+<!--</div>-->
 <div>
     <div style="float: left; border: white 1px solid;">
 
@@ -55,10 +64,10 @@
             热搜：<br>
 
             <?php foreach ($sou as $k => $v){ ?>
-                <a href="/detail?shuming=<?php echo $v['shuming'] ?>"><?php echo $v['shuming']; ?></a>
+                <a href="/detail?book_name=<?php echo $v['book_name'] ?>"><?php echo $v['book_name']; ?></a>
                  &nbsp
                 <?php
-                echo $v['dianji'] ;
+                echo $v['book_dianji'] ;
                 echo '<br>';
             } ?>
         </sapn>
@@ -69,10 +78,10 @@
             月票：<br>
 
             <?php foreach ($yue as $k => $v){ ?>
-                <a href="/detail?shuming=<?php echo $v['shuming'] ?>"><?php echo $v['shuming']; ?></a>
+                <a href="/detail?book_name=<?php echo $v['book_name'] ?>"><?php echo $v['book_name']; ?></a>
                 &nbsp
                 <?php
-                echo $v['yuepiao'] ;
+                echo $v['book_yuepiao'] ;
                 echo '<br>';
             } ?>
         </sapn>
@@ -126,7 +135,11 @@
             <input id="searchInputBySite" type="text" class="clearInput" style="color: rgb(153, 153, 153);"  def="大国重工" placeholder="大国重工" name="word" />
             <input id="searchBySiteBtn" type="submit" class="searchBtn" value="">
             </form>
-            <div class="hotWords">热词： <a href="http://yunqi.qq.com/bk/gdyq/26835006.html" target="_blank">只想继承你的家产</a><a href="http://yunqi.qq.com/bk/gdyq/26550647.html" target="_blank">画春光</a><a href="http://yunqi.qq.com/bk/gdyq/24230535.html" target="_blank">农家小福女</a><a href="http://chuangshi.qq.com/bk/ds/13665778.html" target="_blank">三界红包群</a><a href="http://chuangshi.qq.com/bk/xx/20468795.html" target="_blank">飞剑问道</a><a href="http://chuangshi.qq.com/bk/xh/614782.html" target="_blank">全职法师</a></div></div><div id="headQrCode" class="headQrCode fr"><p>下载QQ阅读</p><img width="80" height="80" src="/static/picture/code03.png"><a href="javascript:" class="close"></a></div></div><script type="text/javascript" src="/static/js/subnav.js"></script><script type="text/javascript">    var searchResultUrl = "/search/index/type/p1/wd/p2.html";
+            <div class="hotWords">热词：
+                <?php foreach ($re as $k => $v){ ?>
+                    <a href="/detail?book_name=<?php echo $v['book_name'] ?>"><?php echo $v['book_name']; ?></a>
+                <?php } ?>
+            </div></div><div id="headQrCode" class="headQrCode fr"><p>下载QQ阅读</p><img width="80" height="80" src="/static/picture/code03.png"><a href="javascript:" class="close"></a></div></div><script type="text/javascript" src="/static/js/subnav.js"></script><script type="text/javascript">    var searchResultUrl = "/search/index/type/p1/wd/p2.html";
 
         $(function () {
             CS.page.subNav.init(searchResultUrl);

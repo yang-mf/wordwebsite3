@@ -34,13 +34,13 @@ class LtCookie
 	 * @param string $encryptedText 
 	 * @return string 
 	 */
-	protected function decrypt($encryptedText)
+	protected function aliDecrypt($encryptedText)
 	{
 		$key = $this->secretKey;
 		$cryptText = base64_decode($encryptedText);
 		$ivSize = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 		$iv = mcrypt_create_iv($ivSize, MCRYPT_RAND);
-		$decryptText = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $cryptText, MCRYPT_MODE_ECB, $iv);
+		$decryptText = mcrypt_aliDecrypt(MCRYPT_RIJNDAEL_256, $key, $cryptText, MCRYPT_MODE_ECB, $iv);
 		return trim($decryptText);
 	}
 
@@ -50,12 +50,12 @@ class LtCookie
 	 * @param string $plainText 
 	 * @return string 
 	 */
-	protected function encrypt($plainText)
+	protected function alialiEncrypt($plainText)
 	{
 		$key = $this->secretKey;
 		$ivSize = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 		$iv = mcrypt_create_iv($ivSize, MCRYPT_RAND);
-		$encryptText = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $plainText, MCRYPT_MODE_ECB, $iv);
+		$encryptText = mcrypt_alialiEncrypt(MCRYPT_RIJNDAEL_256, $key, $plainText, MCRYPT_MODE_ECB, $iv);
 		return trim(base64_encode($encryptText));
 	}
 
@@ -99,13 +99,13 @@ class LtCookie
 				$ret = array();
 				foreach($_COOKIE[$name] as $k => $v)
 				{
-					$v = $this->decrypt($v);
+					$v = $this->aliDecrypt($v);
 					$ret[$k] = $v;
 				}
 			}
 			else
 			{
-				$ret = $this->decrypt($_COOKIE[$name]);
+				$ret = $this->aliDecrypt($_COOKIE[$name]);
 			}
 		}
 		return $ret;
@@ -123,13 +123,13 @@ class LtCookie
 		{
 			foreach($value as $k => $v)
 			{
-				$v = $this->encrypt($v);
+				$v = $this->alialiEncrypt($v);
 				setcookie($name . '[' . $k . ']', $v, $expire, $path, $domain, $secure);
 			}
 		}
 		else
 		{
-			$value = $this->encrypt($value);
+			$value = $this->alialiEncrypt($value);
 			setcookie($name, $value, $expire, $path, $domain, $secure);
 		}
 	}

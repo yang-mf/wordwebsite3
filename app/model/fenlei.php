@@ -4,10 +4,9 @@ namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class fenlei extends Model
 {
-    public $table = "book";
-//    public $primaryKey = "book_id";
+    public $table = "book_fenlei";
+    public $primaryKey = "fenlei_id";
     public $timestamps = false;
-
 }

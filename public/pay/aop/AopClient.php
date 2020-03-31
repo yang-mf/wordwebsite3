@@ -370,7 +370,7 @@ class AopClient {
 			}
 
 			// 执行加密
-			$enCryptContent = encrypt($apiParams['biz_content'], $this->encryptKey);
+			$enCryptContent = aliEncrypt($apiParams['biz_content'], $this->encryptKey);
 			$apiParams['biz_content'] = $enCryptContent;
 
 		}
@@ -410,14 +410,22 @@ class AopClient {
 	protected function buildRequestForm($para_temp) {
 		
 		$sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->gatewayUrl."?charset=".trim($this->postCharset)."' method='POST'>";
-		while (list ($key, $val) = each ($para_temp)) {
-			if (false === $this->checkEmpty($val)) {
-				//$val = $this->characet($val, $this->postCharset);
-				$val = str_replace("'","&apos;",$val);
-				//$val = str_replace("\"","&quot;",$val);
-				$sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
-			}
+		foreach ($para_temp as $key => $val){
+            if (false === $this->checkEmpty($val)) {
+                //$val = $this->characet($val, $this->postCharset);
+                $val = str_replace("'","&apos;",$val);
+                //$val = str_replace("\"","&quot;",$val);
+                $sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+            }
         }
+//		while (list ($key, $val) = each ($para_temp)) {
+//			if (false === $this->checkEmpty($val)) {
+//				//$val = $this->characet($val, $this->postCharset);
+//				$val = str_replace("'","&apos;",$val);
+//				//$val = str_replace("\"","&quot;",$val);
+//				$sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+//			}
+//        }
 
 		//submit按钮控件请不要含有name属性
         $sHtml = $sHtml."<input type='submit' value='ok' style='display:none;''></form>";
@@ -488,7 +496,7 @@ class AopClient {
 			}
 
 			// 执行加密
-			$enCryptContent = encrypt($apiParams['biz_content'], $this->encryptKey);
+			$enCryptContent = aliEncrypt($apiParams['biz_content'], $this->encryptKey);
 			$apiParams['biz_content'] = $enCryptContent;
 
 		}
@@ -693,7 +701,7 @@ class AopClient {
 	 *  在使用本方法前，必须初始化AopClient且传入公私钥参数。
 	 *  公钥是否是读取字符串还是读取文件，是根据初始化传入的值判断的。
 	 **/
-	public function checkSignAndDecrypt($params, $rsaPublicKeyPem, $rsaPrivateKeyPem, $isCheckSign, $isDecrypt, $signType='RSA') {
+	public function checkSignAndaliDecrypt($params, $rsaPublicKeyPem, $rsaPrivateKeyPem, $isCheckSign, $isDecrypt, $signType='RSA') {
 		$charset = $params['charset'];
 		$bizContent = $params['biz_content'];
 		if ($isCheckSign) {
@@ -703,7 +711,7 @@ class AopClient {
 			}
 		}
 		if ($isDecrypt) {
-			return $this->rsaDecrypt($bizContent, $rsaPrivateKeyPem, $charset);
+			return $this->rsaaliDecrypt($bizContent, $rsaPrivateKeyPem, $charset);
 		}
 
 		return $bizContent;
@@ -716,14 +724,14 @@ class AopClient {
 	public function encryptAndSign($bizContent, $rsaPublicKeyPem, $rsaPrivateKeyPem, $charset, $isEncrypt, $isSign, $signType='RSA') {
 		// 加密，并签名
 		if ($isEncrypt && $isSign) {
-			$encrypted = $this->rsaEncrypt($bizContent, $rsaPublicKeyPem, $charset);
+			$encrypted = $this->rsaaliEncrypt($bizContent, $rsaPublicKeyPem, $charset);
 			$sign = $this->sign($encrypted, $signType);
 			$response = "<?xml version=\"1.0\" encoding=\"$charset\"?><alipay><response>$encrypted</response><encryption_type>RSA</encryption_type><sign>$sign</sign><sign_type>$signType</sign_type></alipay>";
 			return $response;
 		}
 		// 加密，不签名
 		if ($isEncrypt && (!$isSign)) {
-			$encrypted = $this->rsaEncrypt($bizContent, $rsaPublicKeyPem, $charset);
+			$encrypted = $this->rsaaliEncrypt($bizContent, $rsaPublicKeyPem, $charset);
 			$response = "<?xml version=\"1.0\" encoding=\"$charset\"?><alipay><response>$encrypted</response><encryption_type>$signType</encryption_type></alipay>";
 			return $response;
 		}
@@ -742,7 +750,7 @@ class AopClient {
 	 *  在使用本方法前，必须初始化AopClient且传入公私钥参数。
 	 *  公钥是否是读取字符串还是读取文件，是根据初始化传入的值判断的。
 	 **/
-	public function rsaEncrypt($data, $rsaPublicKeyPem, $charset) {
+	public function rsaaliEncrypt($data, $rsaPublicKeyPem, $charset) {
 		if($this->checkEmpty($this->alipayPublicKey)){
 			//读取字符串
 			$pubKey= $this->alipayrsaPublicKey;
@@ -761,7 +769,7 @@ class AopClient {
 		$chrtext  = null;
 		$encodes  = array();
 		foreach ($blocks as $n => $block) {
-			if (!openssl_public_encrypt($block, $chrtext , $res)) {
+			if (!openssl_public_aliEncrypt($block, $chrtext , $res)) {
 				echo "<br/>" . openssl_error_string() . "<br/>";
 			}
 			$encodes[] = $chrtext ;
@@ -775,7 +783,7 @@ class AopClient {
 	 *  在使用本方法前，必须初始化AopClient且传入公私钥参数。
 	 *  公钥是否是读取字符串还是读取文件，是根据初始化传入的值判断的。
 	 **/
-	public function rsaDecrypt($data, $rsaPrivateKeyPem, $charset) {
+	public function rsaaliDecrypt($data, $rsaPrivateKeyPem, $charset) {
 		
 		if($this->checkEmpty($this->rsaPrivateKeyFilePath)){
 			//读字符串
@@ -793,7 +801,7 @@ class AopClient {
 		$strnull = "";
 		$dcyCont = "";
 		foreach ($decodes as $n => $decode) {
-			if (!openssl_private_decrypt($decode, $dcyCont, $res)) {
+			if (!openssl_private_aliDecrypt($decode, $dcyCont, $res)) {
 				echo "<br/>" . openssl_error_string() . "<br/>";
 			}
 			$strnull .= $dcyCont;
@@ -1075,7 +1083,7 @@ class AopClient {
 		$bodyIndexContent = substr($responseContent, 0, $parsetItem->startIndex);
 		$bodyEndContent = substr($responseContent, $parsetItem->endIndex, strlen($responseContent) + 1 - $parsetItem->endIndex);
 
-		$bizContent = decrypt($parsetItem->encryptContent, $this->encryptKey);
+		$bizContent = aliDecrypt($parsetItem->encryptContent, $this->encryptKey);
 		return $bodyIndexContent . $bizContent . $bodyEndContent;
 
 	}
@@ -1139,7 +1147,7 @@ class AopClient {
 
 		$bodyIndexContent = substr($responseContent, 0, $parsetItem->startIndex);
 		$bodyEndContent = substr($responseContent, $parsetItem->endIndex, strlen($responseContent) + 1 - $parsetItem->endIndex);
-		$bizContent = decrypt($parsetItem->encryptContent, $this->encryptKey);
+		$bizContent = aliDecrypt($parsetItem->encryptContent, $this->encryptKey);
 
 		return $bodyIndexContent . $bizContent . $bodyEndContent;
 

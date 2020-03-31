@@ -33,6 +33,8 @@ Route::get('/detail','detail\DetailController@detail');
 //支付路由
 Route::get('/pay/show','AlipayController@show');
 Route::post('/pay/pay','AlipayController@pay');
+Route::post('/pay/notify_url','AlipayController@notify_url');
+Route::get('/pay/return_url','AlipayController@return_url');
 
 //注册作者
 Route::get('/zuozhe/zhuce','zuozhe\LoginController@zhuce');
@@ -41,9 +43,7 @@ Route::get('/zuozhe/denglu','zuozhe\LoginController@denglu');
 Route::post('/zuozhe/dodenglu','zuozhe\LoginController@dodenglu');
 Route::get('/zuozhe/add','zuozhe\LoginController@add');
 Route::post('/zuozhe/doadd','zuozhe\LoginController@doadd');
-
-
-
+Route::get('/zuozhe/show','zuozhe\LoginController@show');
 
 //后台管理登录
 Route::get('/admin/zhuce','admin\LoginController@zhuce');

@@ -8,17 +8,11 @@
     </tr>
     <?php foreach ($data as $k => $v) { ?>
     <tr>
-        <td><?php echo $v['shuming']; ?></td>
-        <td><?php echo $v['zuozhe']; ?></td>
-        <td><img src="/<?php echo $v['img'] ?>" width="100px"></td>
-        <td><?php if($v['book_num']==1){ ?>
-            未提交
-         <?php } else{ ?>
-            已提交
-            <?php } ?>
-        </td>
+        <td><?php echo $v['book_name']; ?></td>
+        <td><?php echo $v['zuozhe_name']; ?></td>
+        <td><img src="/<?php echo $v['book_img'] ?>" width="100px"></td>
         <td>
-            <a href="">录入</a>
+            <a href="">录入书籍</a>
         </td>
     </tr>
     <?php } ?>

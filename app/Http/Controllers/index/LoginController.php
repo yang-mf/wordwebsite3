@@ -45,10 +45,10 @@ class LoginController extends Controller
         if($res){
             session(['name'=>$tel]);
 
-            $data = Book::orderBy('dianji','desc')->get();
+            $data = Book::orderBy('book_dianji','desc')->get();
             for($i=0;$i<5;$i++){
-                $sou[$i]['shuming'] = $data[$i]['shuming'];
-                $sou[$i]['dianji'] = $data[$i]['dianji'];
+                $sou[$i]['book_name'] = $data[$i]['book_name'];
+                $sou[$i]['book_dianji'] = $data[$i]['book_dianji'];
             }
 
             $name = session('name');
@@ -77,7 +77,6 @@ class LoginController extends Controller
                 echo "用户名不存在";die;
             }else{
                 $password = $res1['user_pwd'];
-                $user_tel = $res1['user_tel'];
             }
         }
         $pwd = $_POST['pwd'];
@@ -87,6 +86,8 @@ class LoginController extends Controller
             if($pwd != $password){
                 echo "密码有误";die;
             }else{
+                session(['name'=>$name]);
+                return redirect('/index');
                 return view('/index',['name'=>$name]);
                 die;
             }

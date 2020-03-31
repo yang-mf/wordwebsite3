@@ -65,7 +65,12 @@ class LoginController extends Controller
     public function show()
     {
         $data = Book::where(['book_num'=>1])->get();
-        return view('admin/show',['data'=>$data]);
+        return view('/admin/show',['data'=>$data]);
+    }
+    public function showzhang()
+    {
+        $data = Book::where(['book_num'=>1])->get();
+        return view('/admin/show',['data'=>$data]);
     }
 
 }

@@ -34,9 +34,9 @@ class LoginController extends Controller
             echo '密码有误';die;
         }
         $data=[
-            'name'=>$name,
-            'code'=>$code,
-            'pwd'=>$pwd
+            'zuozhe_name'=>$name,
+            'zuozhe_code'=>$code,
+            'zuozhe_pwd'=>$pwd
         ];
         $res = zuozhe::insert($data);
         if($res){
@@ -57,8 +57,8 @@ class LoginController extends Controller
         if(empty($name)){
             echo '作者笔名不能为空';die;
         }
-        $data = zuozhe::where(['name'=>$name])->first();
-        $userpwd = $data['pwd'];
+        $data = zuozhe::where(['zuozhe_name'=>$name])->first();
+        $userpwd = $data['zuozhe_pwd'];
         $pwd = $_POST['pwd'];
         if(empty($pwd)){
             echo '有误';die;
@@ -79,33 +79,46 @@ class LoginController extends Controller
     public function doadd(Request $request)
     {
         $name = session('name');
-        $user_id= zuozhe::where(['name'=>$name])->value('zuozhe_id');
+        $user_id= zuozhe::where(['zuozhe_name'=>$name])->value('zuozhe_id');
         if(empty($user_id)){
             echo '请先登录';die;
         }
         $shuming = $_POST['shuming'];
-        $zuozhe = $_POST['zuozhe'];
 //        $dat = $request->all();//接收所有的
         $file = $request->file("img");//接前台图片
+
 //        print_r($file);die;
         $file_path=$file->getClientOriginalName();//图片路径
+
         $data = $file->move('img',$file_path);
         $img_path=$data;
         $book_info = [
-            'shuming'=>$shuming,
-            'zuozhe'=>$zuozhe,
-            'img'=>$img_path,
+            'book_name'=>$shuming,
+            'book_img'=>$img_path,
             'zuozhe_id'=>$user_id,
-            'booke_num'=>1
+            'booke_num'=>1,
+            'book_type'=>1
         ];
         $res = Book::insert($book_info);
+        dd($res);
         if($res){
-            echo '提交成功';die;
+            return redirect('/zuozhe/show');die;
         }else{
             echo '提交失败';die;
         }
     }
-
+    //显示作者的书籍，可以添加章节
+    public function show()
+    {
+        $name = session('name');
+        if(empty($name)){
+            echo "请先登录";die;
+        }
+        $zuozhe_id = zuozhe::where(['zuozhe_name'=>$name])->value('zuozhe_id');
+        $data = Book::where(['book.zuozhe_id'=>$zuozhe_id])->join('zuozhe', 'zuozhe.zuozhe_id', '=', 'book.zuozhe_id')->get();
+//        dd($data);
+        return view('/zuozhe/show',['data'=>$data]);
+    }
 
     //身份证验证
     function is_idcard($id)
