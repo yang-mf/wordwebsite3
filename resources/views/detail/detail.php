@@ -5,3 +5,7 @@
 点击：<?php echo $detailinfo['dianji']; echo '<br>'; ?>
 分类：<?php echo $detailinfo['fenlei']; echo '<br>'; ?>
 
+
+<a href="/pay/show">月票</a>
+
+

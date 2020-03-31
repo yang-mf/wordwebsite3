@@ -45,6 +45,8 @@
     欢迎用户 <?php echo $name ?> 您的到来;
 <?php } ?>
 <br>
+<a href="/zuozhe/zhuce">作者注册</a>
+<a href="/zuozhe/denglu">作者登录</a>
 <div>
     <div style="float: left; border: white 1px solid;">
 
